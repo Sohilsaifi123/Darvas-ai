@@ -1,0 +1,30 @@
+name: Darvas AI Daily Scan
+
+on:
+  schedule:
+    - cron: '45 3 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install libraries
+        run: pip install yfinance pandas numpy scikit-learn
+
+      - name: Run Darvas AI
+        run: python daily_runner.py
+
+      - name: Save results
+        uses: actions/upload-artifact@v3
+        with:
+          name: darvas-signals
+          path: output/
+          retention-days: 30
