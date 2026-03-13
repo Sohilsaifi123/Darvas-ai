@@ -17,9 +17,11 @@ jobs:
           python-version: '3.10'
 
       - name: Install libraries
-        run: pip install yfinance pandas numpy scikit-learn
+        run: pip install yfinance pandas numpy scikit-learn google-api-python-client google-auth
 
       - name: Run Darvas AI
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
         run: python daily_runner.py
 
       - name: Save results
