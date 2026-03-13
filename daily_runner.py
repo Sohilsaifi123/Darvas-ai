@@ -67,7 +67,8 @@ def upload_to_drive(service, folder_id, filename, content, mime='application/jso
             # Update existing file
             service.files().update(
                 fileId=files[0]['id'],
-                media_body=media
+                media_body=media,
+                supportsAllDrives=True
             ).execute()
             print(f'✅ Updated: {filename}')
         else:
@@ -76,7 +77,8 @@ def upload_to_drive(service, folder_id, filename, content, mime='application/jso
             service.files().create(
                 body=file_metadata,
                 media_body=media,
-                fields='id'
+                fields='id',
+                supportsAllDrives=True
             ).execute()
             print(f'✅ Created: {filename}')
         return True
