@@ -23,7 +23,7 @@ jobs:
         run: python daily_runner.py
 
       - name: Save results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: darvas-signals
           path: output/
