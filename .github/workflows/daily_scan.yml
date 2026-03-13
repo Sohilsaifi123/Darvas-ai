@@ -24,6 +24,16 @@ jobs:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
         run: python daily_runner.py
 
+      - name: Save signals to repo
+        run: |
+          git config user.name "Darvas AI"
+          git config user.email "darvas@ai.com"
+          mkdir -p signals
+          cp output/latest_signals.json signals/latest_signals.json
+          git add signals/latest_signals.json
+          git commit -m "Signals update $(date +%Y-%m-%d)" || echo "No changes"
+          git push
+
       - name: Save results
         uses: actions/upload-artifact@v4
         with:
