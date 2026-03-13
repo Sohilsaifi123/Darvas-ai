@@ -5,11 +5,16 @@ on:
     - cron: '45 3 * * 1-5'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -31,7 +36,7 @@ jobs:
           mkdir -p signals
           cp output/latest_signals.json signals/latest_signals.json
           git add signals/latest_signals.json
-          git commit -m "Signals update $(date +%Y-%m-%d)" || echo "No changes"
+          git commit -m "Signals $(date +%Y-%m-%d)" || echo "No changes"
           git push
 
       - name: Save results
